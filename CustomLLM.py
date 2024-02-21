@@ -57,10 +57,13 @@ class CustomLLM(LLM):
             json=data,
             headers=headers
         )
+        if response.status_code == 401:
+            return "Unauthorized"
         if response.status_code != 200:
             print(response)
             raise ValueError("Error in response")
         print("End of request...")
+        print("Response: ", response.json())
         return response.json()["choices"][0]["message"]["content"]
 
     @property
