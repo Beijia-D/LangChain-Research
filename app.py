@@ -9,7 +9,10 @@ from langchain.prompts.chat import (
 )
 from langchain.chains import LLMChain
 from langchain.schema import BaseOutputParser
-import json
+from langchain.globals import set_llm_cache
+from langchain.cache import SQLiteCache
+
+set_llm_cache(SQLiteCache(database_path=".langchain.db"))
 
 client_id = 'sb-75479b89-e2f4-4c3f-a722-486e9bdd9dc8!b39571|xsuaa_std!b77089'
 client_secret = '2ae79f68-6785-4b28-8ed5-825e1ee154bf$nCq1GdPh6NeyfVNuIYtWP31bNcm-LEC6zmQIlboT6FU='
