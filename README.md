@@ -6,15 +6,17 @@ The LangChain Research project aims to explore the integration of LangChain with
 
 The primary objective of the LangChain Research project is to pave the way for future projects where generative AI can be applied to enhance user experience. By integrating LangChain with the SAP Generative AI Hub, we aim to investigate how generative AI models can be utilized to provide users with more enriching and personalized experiences in various applications.
 
-## Project Components
+## Project Structure
+The project directory structure is organized as follows:
 
-### CustomLLM.py
+- **CustomModel/**: This directory contains custom models developed as part of the LangChain Research project.
+  - `CustomLLM.py`: A Python file within the `CustomModel` directory that serves as a custom encapsulation of the LangChain LLM module. This module facilitates interaction with the SAP Generative AI Hub's APIs.
 
-`CustomLLM.py` is a Python file within the project that serves as a custom encapsulation of the LangChain LLM module. This module is designed to facilitate the interaction with the SAP Generative AI Hub's APIs. It provides functionalities for calling the API endpoints and processing the responses in a customized manner to suit the project's requirements.
+- **prompt-template-demo/**: This directory contains a demo application built using LangChain's Model I/O module. Users can input simple descriptions of risks on a web page and receive suggestions for treatments.
+  - `app.py`: Python file to run the Flask web application.
+  - Other files and directories related to the demo application.
 
-### LangChain.ipynb
-
-`LangChain.ipynb` is a Jupyter Notebook file included in the project. It serves as a sandbox environment for exploring the basic functionalities and methods available in LangChain. This notebook allows researchers and developers to experiment with various language generation and processing tasks within the LangChain framework.
+- **LangChain.ipynb**: This is a Jupyter Notebook file included in the project. It serves as a sandbox environment for exploring the basic functionalities and methods available in LangChain. This notebook allows researchers and developers to experiment with various language generation and processing tasks within the LangChain framework.
 
 ## Getting Started
 
@@ -28,9 +30,15 @@ To get started with the LangChain Research project, follow these steps:
 pip install -r requirements.txt
 ```
 
-3. Run the `app.py` file located in the root directory of the project. This will start a Flask web application.
+3. Navigate to the `prompt-template-demo` directory.
 
-4. Once the application is running, you can access it by navigating to `http://127.0.0.1:5000/` in your web browser. This will open a demo page where users can input a simple description of a risk and receive suggestions for treatments.
+4. Run the `app.py` file using the following command:
+
+```
+python app.py
+```
+
+5. Once the application is running, you can access it by navigating to `http://127.0.0.1:5000/` in your web browser. This will open a demo page where users can input a simple description of a risk and receive suggestions for treatments.
 
 ## Conclusion
 

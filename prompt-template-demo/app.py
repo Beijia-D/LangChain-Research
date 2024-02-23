@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, jsonify
 import requests
 from requests.auth import HTTPBasicAuth
-import CustomLLM
+import sys
+sys.path.append("..")
+from CustomModel import CustomLLM
 from langchain.prompts.chat import (
     ChatPromptTemplate,
     SystemMessagePromptTemplate,
