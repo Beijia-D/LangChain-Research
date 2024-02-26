@@ -90,10 +90,8 @@
                     contentType: 'application/json',
                     data: JSON.stringify({'input_data': inputData}),
                     success: function(response){
-                        var aiSuggestions = response.ai_suggestions.replace(/\n/g, '<br>');
-                        var dbSuggestions = response.db_suggestions.replace(/\n/g, '<br>');
-                        $('#aiOutputField').html(aiSuggestions);
-                        $('#dbOutputField').html(dbSuggestions);
+                        $('#aiOutputField').val(response.ai_suggestions);
+                        $('#dbOutputField').val(response.db_suggestions);
                     }
                 });
             });

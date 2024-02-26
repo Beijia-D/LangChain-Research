@@ -129,7 +129,7 @@ def call_your_api(input_data):
         customLLM = create_customLLM()
         ai_results = chain.run(input_data)
     db_results = match_results(ai_results)
-    return {'ai_suggestions': ai_results.join('\n'), 'db_suggestions': db_results}
+    return {'ai_suggestions': '\n>'.join(ai_results), 'db_suggestions': db_results}
 
 
 @app.route('/')
@@ -140,6 +140,7 @@ def index():
 def api():
     input_data = request.json.get('input_data')
     result = call_your_api(input_data)
+    print(result)
     return jsonify(result)
 
 if __name__ == '__main__':
