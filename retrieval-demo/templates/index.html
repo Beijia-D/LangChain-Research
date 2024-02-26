@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LangChain Research Project</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 500px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #333;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 10px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: auto;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .output-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            width: calc(100% - 10px);
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LangChain Research Project</h1>
+        <input type="text" id="inputField" placeholder="Enter risk description">
+        <button id="submitButton">Submit</button>
+        <div class="output-label">Suggestions from OpenAI:</div>
+        <textarea id="aiOutputField" rows="5"></textarea>
+        <div class="output-label">Suggestions from Database:</div>
+        <textarea id="dbOutputField" rows="5"></textarea>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#submitButton').click(function(){
+                var inputData = $('#inputField').val();
+                $('#aiOutputField').val('Fetching suggestions from AI...');
+                $('#dbOutputField').val('Fetching suggestions from database...');
+                $.ajax({
+                    url: '/api',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({'input_data': inputData}),
+                    success: function(response){
+                        var aiSuggestions = response.ai_suggestions.replace(/\n/g, '<br>');
+                        var dbSuggestions = response.db_suggestions.replace(/\n/g, '<br>');
+                        $('#aiOutputField').html(aiSuggestions);
+                        $('#dbOutputField').html(dbSuggestions);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

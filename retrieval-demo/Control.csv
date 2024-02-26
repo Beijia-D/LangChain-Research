@@ -1,0 +1,16 @@
+id;name;description;significance
+ISBC-01;Access Control Policy;Implement a robust access control policy to restrict unauthorized access to sensitive information and systems.;High
+ISBC-02;Encryption Mechanism;Utilize encryption mechanisms for data at rest and data in transit to safeguard against unauthorized interception and access.;High
+ISBC-03;Regular Security Audits;Conduct regular security audits and assessments to identify vulnerabilities and ensure compliance with security protocols and standards.;High
+ODTF-01;Redundancy Planning;Establish redundancy plans for critical systems and infrastructure to minimize downtime in case of technical failures.;High
+ODTF-02;Disaster Recovery Plan;Develop and maintain a comprehensive disaster recovery plan outlining procedures for restoring operations in the event of a technical failure or disaster.;High
+ODTF-03;Regular Maintenance Schedule;Implement a routine maintenance schedule for hardware and software systems to proactively identify and address potential issues before they escalate.;Medium
+CV-01;Compliance Training;Provide regular training sessions to employees on relevant regulations and compliance requirements to ensure awareness and adherence.;High
+CV-02;Compliance Monitoring;Establish processes for ongoing monitoring and review of activities to detect and prevent any potential compliance violations.;High
+CV-03;Documented Policies and Procedures;Maintain up-to-date documentation of policies and procedures related to regulatory compliance and ensure employees have easy access to this information.;Medium
+FF-01;Segregation of Duties;Implement segregation of duties to ensure that no single individual has control over all aspects of financial transactions, reducing the risk of fraud.;High
+FF-02;Fraud Detection Mechanisms;Deploy fraud detection mechanisms such as anomaly detection algorithms and transaction monitoring systems to identify suspicious activities in real-time.;High
+FF-03;Whistleblower Policy;Establish a whistleblower policy to encourage employees to report any suspected instances of financial fraud confidentially and without fear of retaliation.;High
+RDPRC-01;Crisis Communication Plan;Develop a comprehensive crisis communication plan outlining protocols for effectively addressing and mitigating reputational damage in the event of a public relations crisis.;High
+RDPRC-02;Media Monitoring;Implement media monitoring tools to track mentions and sentiment about the company in real-time, allowing for swift responses to emerging issues.;Medium
+RDPRC-03;Stakeholder Engagement;Maintain open lines of communication with key stakeholders such as customers, investors, and the media to build trust and credibility, reducing the impact of potential reputation damage.;High

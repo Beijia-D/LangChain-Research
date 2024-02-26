@@ -16,6 +16,10 @@ The project directory structure is organized as follows:
   - `app.py`: Python file to run the Flask web application.
   - Other files and directories related to the demo application.
 
+- **retrieval-demo/**: This directory contains an extension of the demo application in `prompt-template-demo`. In addition to the existing functionality, this demo implements a feature that utilizes embedding and vector database (Chromadb) to find the most similar data based on the suggestions provided by AI. Unlike the LangChain-based approach in the `prompt-template-demo`, this functionality does not use LangChain but instead integrates Chromadb for data retrieval.
+  - `app.py`: Python file to run the Flask web application.
+  - Other files and directories related to the demo application.
+
 - **LangChain.ipynb**: This is a Jupyter Notebook file included in the project. It serves as a sandbox environment for exploring the basic functionalities and methods available in LangChain. This notebook allows researchers and developers to experiment with various language generation and processing tasks within the LangChain framework.
 
 ## Getting Started
@@ -30,7 +34,7 @@ To get started with the LangChain Research project, follow these steps:
 pip install -r requirements.txt
 ```
 
-3. Navigate to the `prompt-template-demo` directory.
+3. Navigate to the `prompt-template-demo` or `retrieval-demo` directory.
 
 4. Run the `app.py` file using the following command:
 
