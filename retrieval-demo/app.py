@@ -129,7 +129,7 @@ def call_your_api(input_data):
         customLLM = create_customLLM()
         ai_results = chain.run(input_data)
     db_results = match_results(ai_results)
-    return {'ai_suggestions': '\n>'.join(ai_results), 'db_suggestions': db_results}
+    return {'ai_suggestions': '\n'.join(ai_results), 'db_suggestions': db_results}
 
 
 @app.route('/')
