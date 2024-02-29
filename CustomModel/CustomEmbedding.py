@@ -17,7 +17,6 @@ class CustomEmbedding(BaseModel, Embeddings):
         data = {
             "input": query_text
         }
-        print("Sending request...")
         response = requests.post(
             self.url,
             json=data,
@@ -28,7 +27,6 @@ class CustomEmbedding(BaseModel, Embeddings):
         if response.status_code != 200:
             print(response)
             raise ValueError("Error in response")
-        print("End of request...")
         return response.json()["data"][0]["embedding"]
 
     def embed_documents(self, texts: List[str]) -> List[List[float]]:

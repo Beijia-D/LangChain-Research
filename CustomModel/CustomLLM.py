@@ -51,7 +51,7 @@ class CustomLLM(LLM):
             "stop": "null"
         }
         print("Prompt: ", prompt)
-        print("Sending request...")
+        print("Sending request to get AI suggestions...")
         response = requests.post(
             self.url,
             json=data,
