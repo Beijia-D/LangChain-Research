@@ -30,7 +30,9 @@ To get started with the LangChain Research project, follow these steps:
 
 1. Clone the project repository from GitHub.
 
-2. Ensure that all the required Python libraries are installed by using the `requirements.txt` file provided in the root directory of the project. You can install the dependencies using the following command:
+2. Change some variables in `LangChain.ipynb` and `RAG.py`, such as `<client_id>` and `<cliend_secret>`.
+
+3. Ensure that all the required Python libraries are installed by using the `requirements.txt` file provided in the root directory of the project. You can install the dependencies using the following command:
 
 ```
 pip install -r requirements.txt

@@ -25,8 +25,8 @@ class TransformToListFormat(BaseOutputParser):
 
 class RAG:
     def __init__(self):
-        self.client_id = 'sb-75479b89-e2f4-4c3f-a722-486e9bdd9dc8!b39571|xsuaa_std!b77089'
-        self.client_secret = '2ae79f68-6785-4b28-8ed5-825e1ee154bf$nCq1GdPh6NeyfVNuIYtWP31bNcm-LEC6zmQIlboT6FU='
+        self.client_id = '<client_id>' # replace with your client_id
+        self.client_secret = '<client_secret>' # replace with your client_secret
         self.userToken = None
         self.customLLM = None
         self.vectorStore = None
@@ -35,7 +35,7 @@ class RAG:
 
     def get_token(self):
         response = requests.get(
-            'https://learning.authentication.sap.hana.ondemand.com/oauth/token?grant_type=client_credentials',
+            '<url>/oauth/token?grant_type=client_credentials', # replace with your url
             auth = HTTPBasicAuth(self.client_id, self.client_secret)
         )
         if response.status_code != 200:
@@ -48,7 +48,7 @@ class RAG:
         if self.userToken is None:
             self.get_token()
         return CustomLLM(
-            url="https://api.ai.internalprod.eu-central-1.aws.ml.hana.ondemand.com/v2/inference/deployments/d449d2c58f869ea0/chat/completions?api-version=2023-05-15",
+            url="<llm_api_url>", # replace with your llm_api_url
             userToken=self.userToken,
             max_tokens=5000,
             temperature=0.0,
@@ -60,7 +60,7 @@ class RAG:
         if self.userToken is None:
             self.get_token()
         return CustomEmbedding(
-            url="https://api.ai.internalprod.eu-central-1.aws.ml.hana.ondemand.com/v2/inference/deployments/dc04d48dce740753/embeddings?api-version=2023-05-15",
+            url="<embedding_api_url>", # replace with your embedding_api_url
             userToken=self.userToken
         )
 
