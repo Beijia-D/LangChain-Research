@@ -1,0 +1,195 @@
+risk,control,standard
+Information Security Breach,Access Control Policies,ISO 31000
+Information Security Breach,Regular Security Audits,ISO 31000
+Information Security Breach,Data Encryption,ISO 31000
+Information Security Breach,User Training Programs,ISO 31000
+Information Security Breach,Incident Response Plan,ISO 31000
+Information Security Breach,Regular Software Updates,ISO 31000
+Information Security Breach,Two-Factor Authentication,ISO 31000
+Information Security Breach,Firewall Implementation,ISO 31000
+Information Security Breach,Intrusion Detection Systems,ISO 31000
+Information Security Breach,Regular Backup Procedures,ISO 31000
+Information Security Breach,Access Control Policy,ISO/IEC 27001
+Information Security Breach,User Access Management,ISO/IEC 27001
+Information Security Breach,User Responsibilities,ISO/IEC 27001
+Information Security Breach,System and Application Access Control,ISO/IEC 27001
+Information Security Breach,Cryptographic Controls,ISO/IEC 27001
+Information Security Breach,Security of Network Services,ISO/IEC 27001
+Information Security Breach,Protection from Malware,ISO/IEC 27001
+Information Security Breach,Backup,ISO/IEC 27001
+Information Security Breach,Information Transfer,ISO/IEC 27001
+Information Security Breach,Incident Management,ISO/IEC 27001
+Information Security Breach,Business Continuity Management,ISO/IEC 27001
+Information Security Breach,Access Control Policies,COSO Enterprise Risk Management Framework
+Information Security Breach,User Authentication Procedures,COSO Enterprise Risk Management Framework
+Information Security Breach,Data Encryption,COSO Enterprise Risk Management Framework
+Information Security Breach,Regular Security Audits,COSO Enterprise Risk Management Framework
+Information Security Breach,Incident Response Plan,COSO Enterprise Risk Management Framework
+Information Security Breach,Security Awareness Training,COSO Enterprise Risk Management Framework
+Information Security Breach,Network Firewalls,COSO Enterprise Risk Management Framework
+Information Security Breach,Intrusion Detection Systems,COSO Enterprise Risk Management Framework
+Information Security Breach,Regular Software Updates,COSO Enterprise Risk Management Framework
+Information Security Breach,Secure Backup Procedures,COSO Enterprise Risk Management Framework
+Information Security Breach,Access Control Policies,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Information Security Breach,User Identification and Authentication,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Information Security Breach,Incident Response Plan,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Information Security Breach,Security Awareness Training,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Information Security Breach,Regular System Audits,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Information Security Breach,Data Encryption,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Information Security Breach,Firewall Implementation,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Information Security Breach,Intrusion Detection Systems,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Information Security Breach,Regular Software Updates,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Information Security Breach,Secure Configuration Management,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Operational Disruption Due to Technical Failure,Regular System Maintenance,ISO 31000
+Operational Disruption Due to Technical Failure,Technical Failure Response Plan,ISO 31000
+Operational Disruption Due to Technical Failure,Backup and Recovery Systems,ISO 31000
+Operational Disruption Due to Technical Failure,Equipment Redundancy,ISO 31000
+Operational Disruption Due to Technical Failure,Staff Training on Technical Issues,ISO 31000
+Operational Disruption Due to Technical Failure,Regular System Audits,ISO 31000
+Operational Disruption Due to Technical Failure,Disaster Recovery Plan,ISO 31000
+Operational Disruption Due to Technical Failure,Incident Management Process,ISO 31000
+Operational Disruption Due to Technical Failure,Technology Update Policy,ISO 31000
+Operational Disruption Due to Technical Failure,Vendor Risk Management,ISO 31000
+Operational Disruption Due to Technical Failure,System Maintenance Procedures,ISO/IEC 27001:2013
+Operational Disruption Due to Technical Failure,Incident Management Procedures,ISO/IEC 27001:2013
+Operational Disruption Due to Technical Failure,Backup Strategy,ISO/IEC 27001:2013
+Operational Disruption Due to Technical Failure,Redundancy and Failover Solutions,ISO/IEC 27001:2013
+Operational Disruption Due to Technical Failure,Technical Vulnerability Management,ISO/IEC 27001:2013
+Operational Disruption Due to Technical Failure,System Hardening,ISO/IEC 27001:2013
+Operational Disruption Due to Technical Failure,Disaster Recovery Planning,ISO/IEC 27001:2013
+Operational Disruption Due to Technical Failure,Equipment Protection,ISO/IEC 27001:2013
+Operational Disruption Due to Technical Failure,Regular System Testing,ISO/IEC 27001:2013
+Operational Disruption Due to Technical Failure,Technical Maintenance Procedures,COSO Enterprise Risk Management Framework
+Operational Disruption Due to Technical Failure,Regular System Audits,COSO Enterprise Risk Management Framework
+Operational Disruption Due to Technical Failure,Disaster Recovery Plan,COSO Enterprise Risk Management Framework
+Operational Disruption Due to Technical Failure,Backup and Restore Policies,COSO Enterprise Risk Management Framework
+Operational Disruption Due to Technical Failure,IT Infrastructure Upgrades,COSO Enterprise Risk Management Framework
+Operational Disruption Due to Technical Failure,Redundancy Measures,COSO Enterprise Risk Management Framework
+Operational Disruption Due to Technical Failure,Incident Response Plan,COSO Enterprise Risk Management Framework
+Operational Disruption Due to Technical Failure,System Monitoring Tools,COSO Enterprise Risk Management Framework
+Operational Disruption Due to Technical Failure,Employee Training Programs,COSO Enterprise Risk Management Framework
+Operational Disruption Due to Technical Failure,Vendor Risk Management,COSO Enterprise Risk Management Framework
+Operational Disruption Due to Technical Failure,System Maintenance,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Operational Disruption Due to Technical Failure,Configuration Management,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Operational Disruption Due to Technical Failure,Contingency Planning,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Operational Disruption Due to Technical Failure,Incident Response,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Operational Disruption Due to Technical Failure,System and Information Integrity,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Operational Disruption Due to Technical Failure,Physical and Environmental Protection,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Operational Disruption Due to Technical Failure,Access Control,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Compliance Violations,Compliance Policy Implementation,ISO 31000:2018
+Compliance Violations,Regular Compliance Audits,ISO 31000:2018
+Compliance Violations,Compliance Training Programs,ISO 31000:2018
+Compliance Violations,Violation Reporting Mechanism,ISO 31000:2018
+Compliance Violations,Compliance Risk Assessment,ISO 31000:2018
+Compliance Violations,Regulatory Change Management,ISO 31000:2018
+Compliance Violations,Compliance Reporting System,ISO 31000:2018
+Compliance Violations,Compliance Management Software,ISO 31000:2018
+Compliance Violations,Document Control System,ISO 31000:2018
+Compliance Violations,Compliance Monitoring Tools,ISO 31000:2018
+Compliance Violations,Compliance Policy Development,ISO/IEC 27001:2013
+Compliance Violations,Regular Compliance Audits,ISO/IEC 27001:2013
+Compliance Violations,Employee Training Programs,ISO/IEC 27001:2013
+Compliance Violations,Incident Management Process,ISO/IEC 27001:2013
+Compliance Violations,Access Control Policy,ISO/IEC 27001:2013
+Compliance Violations,Information Security Policy,ISO/IEC 27001:2013
+Compliance Violations,Regular Risk Assessments,ISO/IEC 27001:2013
+Compliance Violations,Data Protection Measures,ISO/IEC 27001:2013
+Compliance Violations,Security Incident Reporting,ISO/IEC 27001:2013
+Compliance Violations,Legal and Regulatory Requirements Review,ISO/IEC 27001:2013
+Compliance Violations,Compliance Policy Implementation,COSO Enterprise Risk Management Framework
+Compliance Violations,Regular Compliance Audits,COSO Enterprise Risk Management Framework
+Compliance Violations,Compliance Training Programs,COSO Enterprise Risk Management Framework
+Compliance Violations,Violation Reporting Mechanism,COSO Enterprise Risk Management Framework
+Compliance Violations,Compliance Risk Assessment,COSO Enterprise Risk Management Framework
+Compliance Violations,Regulatory Change Management,COSO Enterprise Risk Management Framework
+Compliance Violations,Compliance Reporting System,COSO Enterprise Risk Management Framework
+Compliance Violations,Disciplinary Measures for Non-Compliance,COSO Enterprise Risk Management Framework
+Compliance Violations,Compliance Monitoring Tools,COSO Enterprise Risk Management Framework
+Compliance Violations,Legal Counsel Consultation,COSO Enterprise Risk Management Framework
+Compliance Violations,Policy Development and Implementation,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Compliance Violations,Compliance Monitoring,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Compliance Violations,Regular Audits,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Compliance Violations,Employee Training,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Compliance Violations,Access Control,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Compliance Violations,Incident Response Plan,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Financial Fraud,Internal Audit Procedures,ISO 31000:2018
+Financial Fraud,Anti-Fraud Policies,ISO 31000:2018
+Financial Fraud,Financial Controls,ISO 31000:2018
+Financial Fraud,Employee Training Programs,ISO 31000:2018
+Financial Fraud,Whistleblower Programs,ISO 31000:2018
+Financial Fraud,Transaction Monitoring Systems,ISO 31000:2018
+Financial Fraud,Segregation of Duties,ISO 31000:2018
+Financial Fraud,Regular Financial Reporting,ISO 31000:2018
+Financial Fraud,Compliance Checks,ISO 31000:2018
+Financial Fraud,Fraud Detection Software,ISO 31000:2018
+Financial Fraud,Access Control Policy,ISO/IEC 27001:2013 - Information Security Management
+Financial Fraud,User Access Management,ISO/IEC 27001:2013 - Information Security Management
+Financial Fraud,User Responsibilities,ISO/IEC 27001:2013 - Information Security Management
+Financial Fraud,System and Application Access Control,ISO/IEC 27001:2013 - Information Security Management
+Financial Fraud,Cryptographic Controls,ISO/IEC 27001:2013 - Information Security Management
+Financial Fraud,Security of Network Services,ISO/IEC 27001:2013 - Information Security Management
+Financial Fraud,Protection from Malware,ISO/IEC 27001:2013 - Information Security Management
+Financial Fraud,Backup,ISO/IEC 27001:2013 - Information Security Management
+Financial Fraud,Information Transfer,ISO/IEC 27001:2013 - Information Security Management
+Financial Fraud,Incident Management,ISO/IEC 27001:2013 - Information Security Management
+Financial Fraud,Business Continuity Management,ISO/IEC 27001:2013 - Information Security Management
+Financial Fraud,Internal Audit,COSO Enterprise Risk Management Framework
+Financial Fraud,Segregation of Duties,COSO Enterprise Risk Management Framework
+Financial Fraud,Anti-Fraud Policies,COSO Enterprise Risk Management Framework
+Financial Fraud,Regular Financial Reviews,COSO Enterprise Risk Management Framework
+Financial Fraud,Whistleblower Programs,COSO Enterprise Risk Management Framework
+Financial Fraud,Employee Training,COSO Enterprise Risk Management Framework
+Financial Fraud,Access Controls,COSO Enterprise Risk Management Framework
+Financial Fraud,Transaction Monitoring,COSO Enterprise Risk Management Framework
+Financial Fraud,Fraud Detection Software,COSO Enterprise Risk Management Framework
+Financial Fraud,Compliance Program,COSO Enterprise Risk Management Framework
+Financial Fraud,Access Control Policies,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Financial Fraud,User Identification and Authentication,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Financial Fraud,Security Awareness Training,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Financial Fraud,Incident Response Planning,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Financial Fraud,Fraud Detection and Prevention Systems,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Financial Fraud,Financial Transaction Monitoring,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Financial Fraud,Audit and Accountability Controls,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Financial Fraud,Security Assessment and Authorization,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Financial Fraud,System and Information Integrity Controls,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Financial Fraud,Risk Assessment Policies,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Reputation Damage from Public Relations Crisis,Crisis Communication Plan,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Reputation Damage from Public Relations Crisis,Public Relations Policy,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Reputation Damage from Public Relations Crisis,Media Interaction Guidelines,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Reputation Damage from Public Relations Crisis,Reputation Management Strategy,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Reputation Damage from Public Relations Crisis,Social Media Monitoring,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Reputation Damage from Public Relations Crisis,Stakeholder Engagement Plan,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Reputation Damage from Public Relations Crisis,Incident Response Plan,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Reputation Damage from Public Relations Crisis,Brand Protection Measures,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Reputation Damage from Public Relations Crisis,Employee Training and Awareness,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Reputation Damage from Public Relations Crisis,External Communication Control,NIST SP 800-37 - Risk Management Framework for Information Systems and Organizations
+Reputation Damage from Public Relations Crisis,Crisis Management Plan,COSO Enterprise Risk Management Framework
+Reputation Damage from Public Relations Crisis,Media Training,COSO Enterprise Risk Management Framework
+Reputation Damage from Public Relations Crisis,Public Relations Policy,COSO Enterprise Risk Management Framework
+Reputation Damage from Public Relations Crisis,Social Media Guidelines,COSO Enterprise Risk Management Framework
+Reputation Damage from Public Relations Crisis,Stakeholder Communication Plan,COSO Enterprise Risk Management Framework
+Reputation Damage from Public Relations Crisis,Reputation Management Strategy,COSO Enterprise Risk Management Framework
+Reputation Damage from Public Relations Crisis,Incident Response Plan,COSO Enterprise Risk Management Framework
+Reputation Damage from Public Relations Crisis,Brand Monitoring Tools,COSO Enterprise Risk Management Framework
+Reputation Damage from Public Relations Crisis,Ethical Business Conduct Guidelines,COSO Enterprise Risk Management Framework
+Reputation Damage from Public Relations Crisis,Transparency Initiatives,COSO Enterprise Risk Management Framework
+Reputation Damage from Public Relations Crisis,Public Relations Policy,ISO/IEC 27001:2013 - Information Security Management
+Reputation Damage from Public Relations Crisis,Crisis Communication Plan,ISO/IEC 27001:2013 - Information Security Management
+Reputation Damage from Public Relations Crisis,Media Training,ISO/IEC 27001:2013 - Information Security Management
+Reputation Damage from Public Relations Crisis,Reputation Management Strategy,ISO/IEC 27001:2013 - Information Security Management
+Reputation Damage from Public Relations Crisis,Social Media Monitoring,ISO/IEC 27001:2013 - Information Security Management
+Reputation Damage from Public Relations Crisis,Stakeholder Engagement Plan,ISO/IEC 27001:2013 - Information Security Management
+Reputation Damage from Public Relations Crisis,Incident Response Plan,ISO/IEC 27001:2013 - Information Security Management
+Reputation Damage from Public Relations Crisis,Information Security Policy,ISO/IEC 27001:2013 - Information Security Management
+Reputation Damage from Public Relations Crisis,Data Breach Response Plan,ISO/IEC 27001:2013 - Information Security Management
+Reputation Damage from Public Relations Crisis,Brand Protection Measures,ISO/IEC 27001:2013 - Information Security Management
+Reputation Damage from Public Relations Crisis,Crisis Management Plan,ISO 31000:2018 - Risk Management Guidelines
+Reputation Damage from Public Relations Crisis,Media Training,ISO 31000:2018 - Risk Management Guidelines
+Reputation Damage from Public Relations Crisis,Public Relations Policy,ISO 31000:2018 - Risk Management Guidelines
+Reputation Damage from Public Relations Crisis,Social Media Guidelines,ISO 31000:2018 - Risk Management Guidelines
+Reputation Damage from Public Relations Crisis,Reputation Management Strategy,ISO 31000:2018 - Risk Management Guidelines
+Reputation Damage from Public Relations Crisis,Stakeholder Communication Plan,ISO 31000:2018 - Risk Management Guidelines
+Reputation Damage from Public Relations Crisis,Incident Response Plan,ISO 31000:2018 - Risk Management Guidelines
+Reputation Damage from Public Relations Crisis,Brand Monitoring Tools,ISO 31000:2018 - Risk Management Guidelines
+Reputation Damage from Public Relations Crisis,Employee Code of Conduct,ISO 31000:2018 - Risk Management Guidelines
+Reputation Damage from Public Relations Crisis,External Communication Policy,ISO 31000:2018 - Risk Management Guidelines
