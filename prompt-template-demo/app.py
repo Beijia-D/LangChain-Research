@@ -16,8 +16,15 @@ from langchain.cache import SQLiteCache
 
 set_llm_cache(SQLiteCache(database_path=".langchain.db"))
 
-client_id = 'sb-75479b89-e2f4-4c3f-a722-486e9bdd9dc8!b39571|xsuaa_std!b77089'
-client_secret = '2ae79f68-6785-4b28-8ed5-825e1ee154bf$nCq1GdPh6NeyfVNuIYtWP31bNcm-LEC6zmQIlboT6FU='
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+CLIENT_ID = os.getenv("CLIENT_ID")
+CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+AUTH_URL = os.getenv("AUTH_URL")
+LLM_API_URL = os.getenv("LLM_API_URL")
+
 template = """You are an experienced risk assessment expert. Please utilize your knowledge of risk management and Security Frameworks like “ISO27001”, Privacy Frameworks like “GRDR”, “HIPAA” and other Compliance Frameworks to answer the questions based on the relevant information.
 Please perform the following tasks:
 1 - Understand Treatment types and treatment type classification standards.
@@ -43,8 +50,8 @@ class TransformToJsonFormat(BaseOutputParser):
 
 def get_token():
     response = requests.get(
-        'https://learning.authentication.sap.hana.ondemand.com/oauth/token?grant_type=client_credentials',
-        auth = HTTPBasicAuth(client_id, client_secret)
+        AUTH_URL,
+        auth = HTTPBasicAuth(CLIENT_ID, CLIENT_SECRET)
     )
     if (response.status_code != 200):
         print("Error: " + str(response.status_code))
@@ -55,7 +62,7 @@ def get_token():
 def create_customLLM():
     userToken = get_token()
     return CustomLLM.CustomLLM(
-        url="https://api.ai.internalprod.eu-central-1.aws.ml.hana.ondemand.com/v2/inference/deployments/d449d2c58f869ea0/chat/completions?api-version=2023-05-15",
+        url=LLM_API_URL,
         userToken=userToken,
         max_tokens=5000,
         temperature=0.0,

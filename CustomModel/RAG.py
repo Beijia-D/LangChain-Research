@@ -17,6 +17,17 @@ from langchain.cache import SQLiteCache
 from langchain_community.vectorstores import PGEmbedding
 from langchain_community.document_loaders.csv_loader import CSVLoader
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+CLIENT_ID = os.getenv("CLIENT_ID")
+CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+AUTH_URL = os.getenv("AUTH_URL")
+LLM_API_URL = os.getenv("LLM_API_URL")
+EMBEDDING_API_URL = os.getenv("EMBEDDING_API_URL")
+POSTGRES_CONNECTION_URL = os.getenv("POSTGRES_CONNECTION_URL")
+
 class TransformToListFormat(BaseOutputParser):
 
     def parse(self, text: str):
@@ -32,10 +43,8 @@ class resultJsonFormat(BaseOutputParser):
             return "Unauthorized"
         return json.loads(text.replace("\n", ""))
 
-class RAG:
+class CommonFunctionality:
     def __init__(self):
-        self.client_id = 'sb-75479b89-e2f4-4c3f-a722-486e9bdd9dc8!b39571|xsuaa_std!b77089'
-        self.client_secret = '2ae79f68-6785-4b28-8ed5-825e1ee154bf$nCq1GdPh6NeyfVNuIYtWP31bNcm-LEC6zmQIlboT6FU='
         self.userToken = None
         self.customLLM = None
         self.vectorStore = None
@@ -44,8 +53,8 @@ class RAG:
 
     def get_token(self):
         response = requests.get(
-            'https://learning.authentication.sap.hana.ondemand.com/oauth/token?grant_type=client_credentials',
-            auth = HTTPBasicAuth(self.client_id, self.client_secret)
+            AUTH_URL,
+            auth = HTTPBasicAuth(CLIENT_ID, CLIENT_SECRET)
         )
         if response.status_code != 200:
             print("Error: " + str(response.status_code))
@@ -57,7 +66,7 @@ class RAG:
         if self.userToken is None:
             self.get_token()
         return CustomLLM(
-            url="https://api.ai.internalprod.eu-central-1.aws.ml.hana.ondemand.com/v2/inference/deployments/d449d2c58f869ea0/chat/completions?api-version=2023-05-15",
+            url=LLM_API_URL,
             userToken=self.userToken,
             max_tokens=5000,
             temperature=0.0,
@@ -69,9 +78,31 @@ class RAG:
         if self.userToken is None:
             self.get_token()
         return CustomEmbedding(
-            url="https://api.ai.internalprod.eu-central-1.aws.ml.hana.ondemand.com/v2/inference/deployments/dc04d48dce740753/embeddings?api-version=2023-05-15",
+            url=EMBEDDING_API_URL,
             userToken=self.userToken
         )
+
+    def load_documents(self, path, delimiter=';', quotechar='"', fieldnames=['id', 'name', 'description', 'significance'], source_column='id'):
+        loader = CSVLoader(file_path=path, csv_args={
+            'delimiter': delimiter,
+            'quotechar': quotechar,
+            'fieldnames': fieldnames
+        }, source_column=source_column)
+        return loader.load()
+
+    def load_vectorstore(self, documents, collection_name):
+        self.customEmbedding = self.create_customEmbedding()
+        self.vectorStore = PGEmbedding.from_documents(
+            embedding=self.customEmbedding,
+            documents=documents,
+            collection_name=collection_name,
+            connection_string=POSTGRES_CONNECTION_URL,
+            pre_delete_collection=True
+        )
+
+class RAG(CommonFunctionality):
+    def __init__(self):
+        super().__init__()
 
     def get_ai_suggestions(self, input_data):
         template = """You are an experienced risk assessment expert. Please utilize your knowledge of risk management and Security Frameworks like “ISO27001”, Privacy Frameworks like “GRDR”, “HIPAA” and other Compliance Frameworks to answer the questions based on the relevant information.
@@ -109,21 +140,11 @@ class RAG:
         }, source_column=source_column)
         return loader.load()
 
-    def load_vectorstore(self, documents, collection_name, connection_string):
-        self.customEmbedding = self.create_customEmbedding()
-        self.vectorStore = PGEmbedding.from_documents(
-            embedding=self.customEmbedding,
-            documents=documents,
-            collection_name=collection_name,
-            connection_string=connection_string,
-            pre_delete_collection=True
-        )
-
-    def get_db_suggestions(self, path, ai_results, collection_name, connection_string, k=2):
+    def get_db_suggestions(self, path, ai_results, collection_name, k=2):
         if self.vectorStore is None:
             print("Loading vectorstore...")
             documents = self.load_documents(path)
-            self.load_vectorstore(documents, collection_name, connection_string)
+            self.load_vectorstore(documents, collection_name)
         page_contents = []
         print("Searching for similar documents...")
         for result in ai_results:
@@ -132,57 +153,19 @@ class RAG:
         unique_contents = list(set(page_contents))
         return '\n\n'.join(unique_contents)
 
-    def call_your_api(self, input_data, path, collection_name, connection_string):
+    def call_your_api(self, input_data, path, collection_name):
         ai_results = self.get_ai_suggestions(input_data)
         db_results = self.get_db_suggestions(
             path=path,
             ai_results=ai_results,
-            collection_name=collection_name,
-            connection_string=connection_string
+            collection_name=collection_name
         )
         
         return {'ai_suggestions': '\n'.join(ai_results), 'db_suggestions': db_results}
 
-class RAGplus:
+class RAGplus(CommonFunctionality):
     def __init__(self):
-        self.client_id = 'sb-75479b89-e2f4-4c3f-a722-486e9bdd9dc8!b39571|xsuaa_std!b77089'
-        self.client_secret = '2ae79f68-6785-4b28-8ed5-825e1ee154bf$nCq1GdPh6NeyfVNuIYtWP31bNcm-LEC6zmQIlboT6FU='
-        self.userToken = None
-        self.customLLM = None
-        self.vectorStore = None
-
-        set_llm_cache(SQLiteCache(database_path=".langchain.db"))
-
-    def get_token(self):
-        response = requests.get(
-            'https://learning.authentication.sap.hana.ondemand.com/oauth/token?grant_type=client_credentials',
-            auth = HTTPBasicAuth(self.client_id, self.client_secret)
-        )
-        if response.status_code != 200:
-            print("Error: " + str(response.status_code))
-            print(response.json())
-            exit(1)
-        self.userToken = response.json()["access_token"]
-
-    def create_customLLM(self):
-        if self.userToken is None:
-            self.get_token()
-        return CustomLLM(
-            url="https://api.ai.internalprod.eu-central-1.aws.ml.hana.ondemand.com/v2/inference/deployments/d449d2c58f869ea0/chat/completions?api-version=2023-05-15",
-            userToken=self.userToken,
-            max_tokens=5000,
-            temperature=0.0,
-            frequency_penalty=0,
-            presence_penalty=0
-        )
-
-    def create_customEmbedding(self):
-        if self.userToken is None:
-            self.get_token()
-        return CustomEmbedding(
-            url="https://api.ai.internalprod.eu-central-1.aws.ml.hana.ondemand.com/v2/inference/deployments/dc04d48dce740753/embeddings?api-version=2023-05-15",
-            userToken=self.userToken
-        )
+        super().__init__()
 
     def get_ai_suggestions(self, risk, standard, controls):
         template = """
@@ -211,29 +194,11 @@ class RAGplus:
             ai_results = chain.run(risk=risk, standard=standard, controls=controls)
         return ai_results
 
-    def load_documents(self, path, delimiter=';', quotechar='"', fieldnames=['id', 'name', 'description', 'significance'], source_column='id'):
-        loader = CSVLoader(file_path=path, csv_args={
-            'delimiter': delimiter,
-            'quotechar': quotechar,
-            'fieldnames': fieldnames
-        }, source_column=source_column)
-        return loader.load()
-
-    def load_vectorstore(self, documents, collection_name, connection_string):
-        self.customEmbedding = self.create_customEmbedding()
-        self.vectorStore = PGEmbedding.from_documents(
-            embedding=self.customEmbedding,
-            documents=documents,
-            collection_name=collection_name,
-            connection_string=connection_string,
-            pre_delete_collection=True
-        )
-
-    def get_db_suggestions(self, path, query, collection_name, connection_string, k=10):
+    def get_db_suggestions(self, path, query, collection_name, k=10):
         if self.vectorStore is None:
             print("Loading vectorstore...")
             documents = self.load_documents(path)
-            self.load_vectorstore(documents, collection_name, connection_string)
+            self.load_vectorstore(documents, collection_name)
         relevant_docs = []
         print("Searching for relevant documents...")
         for doc, score in self.vectorStore.similarity_search_with_score(query, k=k):
@@ -242,12 +207,11 @@ class RAGplus:
         print("relevant controls:", relevant_docs)
         return '\n'.join(relevant_docs)
 
-    def call_your_api(self, risk, standard, path, collection_name, connection_string):
+    def call_your_api(self, risk, standard, path, collection_name):
         relevant_controls = self.get_db_suggestions(
             path=path,
             query=risk,
-            collection_name=collection_name,
-            connection_string=connection_string
+            collection_name=collection_name
         )
         ai_results = self.get_ai_suggestions(risk, standard, relevant_controls)
         result = {'ai_suggestions': "The AI did not provide additional controls.", 'db_suggestions': "No applicable controls found."}

@@ -16,8 +16,7 @@ def api():
     # result = rag.call_your_api(
     #     input_data,
     #     path='Control.csv',
-    #     collection_name='Control',
-    #     connection_string="postgresql://postgres:2000502@127.0.0.1:15432/vectorstore"
+    #     collection_name='Control'
     # )
     # print(result)
     # return jsonify(result)
@@ -27,8 +26,7 @@ def api():
         risk,
         standard,
         path='Control.csv',
-        collection_name='Control',
-        connection_string="postgresql://postgres:2000502@127.0.0.1:15432/vectorstore"
+        collection_name='Control'
     )
     return jsonify(result)
 
