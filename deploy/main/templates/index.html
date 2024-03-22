@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Risk Management Suggestions</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .standard-list {
+            margin-top: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: none;
+        }
+
+        button {
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Risk Management Suggestions</h1>
+        <label for="riskInfo">Risk Information:</label>
+        <input type="text" id="riskInfo" placeholder="Enter risk information...">
+        
+        <label for="riskStandard">Risk Management Standard:</label>
+        <input type="text" id="riskStandard" placeholder="Enter risk management standard...">
+        <div class="standard-list">
+            <p>Commonly used risk management standards:</p>
+            <ul>
+                <li>ISO 31000:2018 - Risk Management Guidelines</li>
+                <li>COSO ERM - Enterprise Risk Management Framework</li>
+                <li>PMI Risk Management Framework</li>
+                <li>NIST Cybersecurity Framework</li>
+            </ul>
+        </div>
+
+        <button id="submitButton">Submit</button>
+
+        <div class="output-container">
+            <h3>AI Suggestions:</h3>
+            <textarea id="aiSuggestions" rows="5" readonly></textarea>
+        </div>
+
+        <div class="output-container">
+            <h3>Database Suggestions:</h3>
+            <textarea id="dbSuggestions" rows="5" readonly></textarea>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#submitButton').click(function(){
+                var riskInfo = $('#riskInfo').val();
+                var riskStandard = $('#riskStandard').val();
+
+                // Send a POST request to the backend API
+                $.ajax({
+                    url: '/api',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({'risk_info': riskInfo, 'risk_standard': riskStandard}),
+                    success: function(response){
+                        $('#aiSuggestions').val(response.ai_suggestions);
+                        $('#dbSuggestions').val(response.db_suggestions);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

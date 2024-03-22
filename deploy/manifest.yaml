@@ -1,0 +1,8 @@
+applications:
+- name: risk-control-proposal
+  routes:
+  - route: risk-control-proposal-poc.cfapps.sap.hana.ondemand.com
+  path: ./
+  memory: 128M
+  buildpack: python_buildpack
+  command: cd main && python app.py
