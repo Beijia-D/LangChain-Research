@@ -221,3 +221,70 @@ class RAGplus(CommonFunctionality):
             result['ai_suggestions']="\n\n".join([f"Name: {item['name']}\nDescription: {item['description']}" for item in ai_results['suggested_controls']])
         
         return result
+
+class RAGplusplus(CommonFunctionality):
+    def __init__(self):
+        super().__init__()
+    
+    def retrieve_ai_suggestions(self, template, output_parser, risk, standard, controls=""):
+        if self.customLLM is None:
+            print("Creating new customLLM...")
+            self.customLLM = self.create_customLLM()
+        prompt = PromptTemplate.from_template(template)
+        chain = LLMChain(
+            llm=self.customLLM,
+            prompt=prompt,
+            output_parser=output_parser
+        )
+        ai_results = chain.run(risk=risk, standard=standard, controls=controls)
+        if ai_results == "Unauthorized":
+            print("Token expired. Getting new token...")
+            self.get_token()
+            self.customLLM = self.create_customLLM()
+            ai_results = chain.run(risk=risk, standard=standard, controls=controls)
+        return ai_results
+    def retrieve_relevant_controls(self, path, ai_results, collection_name, k=2):
+        if self.vectorStore is None:
+            print("Loading vectorstore...")
+            documents = self.load_documents(path)
+            self.load_vectorstore(documents, collection_name)
+        page_contents = []
+        print("Searching for similar documents...")
+        for result in ai_results:
+            for doc in self.vectorStore.similarity_search(result, k):
+                page_contents.append(doc.page_content)
+        unique_contents = list(set(page_contents))
+        return '\n'.join(unique_contents)
+    def call_your_api(self, risk, standard, path, collection_name):
+        template1 = """System:You are an experienced risk assessment expert.
+        Please perform the following tasks:
+        1 - Understand Treatment type and treatment type classification standards.
+        "Control": Control measures are designed to reduce the likelihood or impact of risks. They can include policies, procedures, guidelines, and physical or technological safeguards.
+        2 - Suggest approperiate treatments based on the risk user given and the risk management standard user required. Your answer should be a list. Every record, it should only contain control name. “name” is the summary information of treatment, less than 10 words. Please use your knowledge to set name for your treatment.
+        ONLY return a comma separated list, and nothing more. For example: "name1,name2,name3,...nameN"
+        User:Risk info: {risk}; Required standard: {standard}
+        """
+        template2 = """
+        You are an experienced risk assessment expert.There are many widely used risk management standards: ISO 31000, COSO ERM, NIST SP 800-30, and ISO/IEC 27005.
+        You need to know that control measures are designed to reduce the likelihood or impact of risks. They can include policies, procedures, guidelines, and physical or technological safeguards.
+        Here we found some existing controls for you:
+        {controls}.
+        Now, users have given you the risk information: "{risk}". And users want to get some suggestions for controls according to the risk management standard "{standard}". 
+        Besides, above controls may be empty or may not be applicable for the risk. Please first check if there are any controls that meet the standard and are applicable to the risk provided by the user.
+        If no specific controls were provided in the prompt, just give some suggestions. If there are applicable controls, please retain these controls. You can also suggest additional control measures.
+        Attention, when you suggest additional controls, please try to use the original control id and control name in the risk management standard "{standard}" if possible. Do not
+        ONLY return a dictionary, containing two keys: "applicable_controls" and "suggested_controls". Each key corresponds to a list as its value. The list can be empty. The items in the list is also in dictionary, contains three keys: "id", "name", "description". Don't add anything more in the response.
+        """
+        first_ai_results = self.retrieve_ai_suggestions(template1, TransformToListFormat(), risk, standard)
+        relevant_controls = self.retrieve_relevant_controls(
+            path=path,
+            ai_results=first_ai_results,
+            collection_name=collection_name
+        )
+        second_ai_results = self.retrieve_ai_suggestions(template2, resultJsonFormat(), risk, standard, relevant_controls)
+        result = {'ai_suggestions': "The AI did not provide additional controls.", 'db_suggestions': "No applicable controls found."}
+        if len(second_ai_results['applicable_controls'])>0:
+            result['db_suggestions']="\n\n".join([f"ID: {item['id']}\nName: {item['name']}\nDescription: {item['description']}" for item in second_ai_results['applicable_controls']])
+        if len(second_ai_results['suggested_controls'])>0:
+            result['ai_suggestions']="\n\n".join([f"ID: {item['id']}\nName: {item['name']}\nDescription: {item['description']}" for item in second_ai_results['suggested_controls']])
+        return result
