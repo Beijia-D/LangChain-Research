@@ -1,11 +1,36 @@
 from flask import Flask, render_template, request, jsonify
-import sys
+from cfenv import AppEnv
+from hdbcli import dbapi
+
 import os
+port = int(os.environ.get('PORT', 3001))
+
+import sys
 sys.path.append("..")
 from CustomModel import RAG
+
 app = Flask(__name__)
-port = int(os.environ.get('PORT', 3001))
-ragPlusPlus = RAG.RAGplus()
+env = AppEnv()
+hana = env.get_service(label="hana")
+aicore = env.get_service(label="aicore")
+db_connection = None
+ai_credentials = None
+if hana is None:
+    raise ValueError("No HANA service bound to the application.")
+else:
+    db_connection = dbapi.connect(address=hana.credentials['host'],
+            port=int(hana.credentials['port']),
+            user=hana.credentials['user'],
+            password=hana.credentials['password'],
+            encrypt='true',
+            sslTrustStore=hana.credentials['certificate'])
+
+if aicore is None:
+    raise ValueError("No AI Core service bound to the application.")
+else:
+    ai_credentials = aicore.credentials
+
+ragPlusPlus = RAG.RAGplus(ai_credentials, db_connection)
 
 @app.route('/')
 def index():
@@ -36,4 +61,4 @@ def api():
     return jsonify(result)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, debug=True)

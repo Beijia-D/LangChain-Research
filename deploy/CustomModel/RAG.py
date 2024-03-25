@@ -1,7 +1,6 @@
 import requests
 from requests.auth import HTTPBasicAuth
 import json
-from hdbcli import dbapi
 
 from CustomModel.CustomLLM import CustomLLM
 from CustomModel.CustomEmbedding import CustomEmbedding
@@ -14,18 +13,8 @@ from langchain_community.vectorstores.hanavector import HanaDB
 from langchain_community.document_loaders.csv_loader import CSVLoader
 
 import os
-from dotenv import load_dotenv
-load_dotenv()
-
-CLIENT_ID = os.getenv("CLIENT_ID")
-CLIENT_SECRET = os.getenv("CLIENT_SECRET")
-AUTH_URL = os.getenv("AUTH_URL")
 LLM_API_URL = os.getenv("LLM_API_URL")
 EMBEDDING_API_URL = os.getenv("EMBEDDING_API_URL")
-HANA_DB_ADDRESS = os.getenv("HANA_DB_ADDRESS")
-HANA_DB_PORT = os.getenv("HANA_DB_PORT")
-HANA_DB_USER = os.getenv("HANA_DB_USER")
-HANA_DB_PASSWORD = os.getenv("HANA_DB_PASSWORD")
 
 class TransformToListFormat(BaseOutputParser):
 
@@ -43,7 +32,9 @@ class resultJsonFormat(BaseOutputParser):
         return json.loads(text.replace("\n", ""))
 
 class CommonFunctionality:
-    def __init__(self):
+    def __init__(self, credentials, connection):
+        self.credentials = credentials
+        self.connection = connection
         self.userToken = None
         self.customLLM = None
         self.vectorStore = None
@@ -52,8 +43,8 @@ class CommonFunctionality:
 
     def get_token(self):
         response = requests.get(
-            AUTH_URL,
-            auth = HTTPBasicAuth(CLIENT_ID, CLIENT_SECRET)
+            self.credentials["url"] + "/oauth/token?grant_type=client_credentials",
+            auth = HTTPBasicAuth(self.credentials["clientid"], self.credentials["clientsecret"])
         )
         if response.status_code != 200:
             print("Error: " + str(response.status_code))
@@ -90,21 +81,13 @@ class CommonFunctionality:
         return loader.load()
 
     def load_vectorstore(self, documents, collection_name):
-        self.customEmbedding = self.create_customEmbedding()
-        connection = dbapi.connect(
-            address=HANA_DB_ADDRESS,
-            port=HANA_DB_PORT,
-            user=HANA_DB_USER,
-            password=HANA_DB_PASSWORD,
-            encrypt=True,
-            sslValidateCertificate=False,
-        )
-        self.vectorStore = HanaDB(embedding=self.customEmbedding, connection=connection, table_name=collection_name)
+        customEmbedding = self.create_customEmbedding()
+        self.vectorStore = HanaDB(embedding=customEmbedding, connection=self.connection, table_name=collection_name)
         self.vectorStore.add_documents(documents)
 
 class RAG(CommonFunctionality):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, credentials, connection):
+        super().__init__(credentials, connection)
 
     def get_ai_suggestions(self, risk, standard, controls):
         template = """
@@ -162,8 +145,8 @@ class RAG(CommonFunctionality):
         return result
     
 class RAGplus(CommonFunctionality):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, credentials, connection):
+        super().__init__(credentials, connection)
     
     def simple_ai_suggestoin(self, risk, standard, number):
         template = """
