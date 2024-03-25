@@ -1,8 +1,14 @@
 applications:
 - name: risk-control-proposal
   routes:
-  - route: risk-control-proposal-poc.cfapps.sap.hana.ondemand.com
+  - route: risk-control-proposal-poc-beijia-playground.cfapps.sap.hana.ondemand.com
   path: ./
   memory: 128M
   buildpack: python_buildpack
   command: cd main && python app.py
+  env:
+    LLM_API_URL: 'https://api.ai.internalprod.eu-central-1.aws.ml.hana.ondemand.com/v2/inference/deployments/d449d2c58f869ea0/chat/completions?api-version=2023-05-15'
+    EMBEDDING_API_URL: 'https://api.ai.internalprod.eu-central-1.aws.ml.hana.ondemand.com/v2/inference/deployments/dc04d48dce740753/embeddings?api-version=2023-05-15'
+  services:
+  - container
+  - sap-ai-core

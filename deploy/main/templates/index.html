@@ -88,12 +88,12 @@
 
         <div class="output-container">
             <h3>AI Suggestions:</h3>
-            <textarea id="aiSuggestions" rows="5" readonly></textarea>
+            <textarea id="aiSuggestions" rows="15" readonly></textarea>
         </div>
 
         <div class="output-container">
             <h3>Database Suggestions:</h3>
-            <textarea id="dbSuggestions" rows="5" readonly></textarea>
+            <textarea id="dbSuggestions" rows="15" readonly></textarea>
         </div>
     </div>
 
@@ -104,6 +104,8 @@
                 var riskInfo = $('#riskInfo').val();
                 var riskStandard = $('#riskStandard').val();
 
+                $('#submitButton').prop('disabled', true).text('Waiting...');
+
                 // Send a POST request to the backend API
                 $.ajax({
                     url: '/api',
@@ -111,6 +113,7 @@
                     contentType: 'application/json',
                     data: JSON.stringify({'risk_info': riskInfo, 'risk_standard': riskStandard}),
                     success: function(response){
+                        $('#submitButton').prop('disabled', false).text('Submit');
                         $('#aiSuggestions').val(response.ai_suggestions);
                         $('#dbSuggestions').val(response.db_suggestions);
                     }
