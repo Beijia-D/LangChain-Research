@@ -1,4 +1,4 @@
-POST https://risk-control-proposal-poc.cfapps.sap.hana.ondemand.com/getAIsuggestions
+POST https://risk-control-proposal-poc-beijia-playground.cfapps.sap.hana.ondemand.com/getAIsuggestions
 Content-Type: application/json
 Accept: application/json
 
@@ -9,7 +9,7 @@ Accept: application/json
 }
 
 ###
-POST https://risk-control-proposal-poc.cfapps.sap.hana.ondemand.com/api
+POST https://risk-control-proposal-poc-beijia-playground.cfapps.sap.hana.ondemand.com/api
 Content-Type: application/json
 Accept: application/json
 
