@@ -17,6 +17,8 @@ The project directory structure is organized as follows:
       [<img src="./img/simple-rag-procedure.png" height="300"/>](./img/default_rag_procedure.png?raw=true)
     - By using `RAGplus` class, you can firstly access controls from exsiting dataset that is related to the given risk info and then retrieve responses from GenAI which include analysis about the relevant controls and additional control suggestions.
       [<img src="./img/default-rag-procedure.png" height="300"/>](./img/default_rag_procedure.png?raw=true)
+    - `RAGplusplus` workflow:
+      [<img src="./img/Query expansion RAG.png" height="300"/>](./img/default_rag_procedure.png?raw=true)
 
 - **prompt-template-demo/**: This directory contains a demo application built using LangChain's Model I/O module. Users can input simple descriptions of risks on a web page and receive suggestions for treatments.
   - `app.py`: Python file to run the Flask web application.
