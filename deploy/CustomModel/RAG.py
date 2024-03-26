@@ -1,3 +1,4 @@
+from typing import Iterable, List, Optional
 import requests
 from requests.auth import HTTPBasicAuth
 import json
@@ -32,11 +33,13 @@ class resultJsonFormat(BaseOutputParser):
         return json.loads(text.replace("\n", ""))
 
 class CommonFunctionality:
-    def __init__(self, credentials, connection):
+    def __init__(self, credentials, tableName, connection):
         self.credentials = credentials
+        self.tableName = tableName
         self.connection = connection
         self.userToken = None
         self.customLLM = None
+        self.customEmbedding = None
         self.vectorStore = None
 
         set_llm_cache(SQLiteCache(database_path=".langchain.db"))
@@ -80,17 +83,35 @@ class CommonFunctionality:
         }, source_column=source_column)
         return loader.load()
 
-    def load_vectorstore(self, documents, collection_name):
-        customEmbedding = self.create_customEmbedding()
-        self.vectorStore = HanaDB(embedding=customEmbedding, connection=self.connection, table_name=collection_name)
-        self.vectorStore.add_documents(documents)
+    def load_vectorstore(self):
+        if self.customEmbedding is None:
+            self.customEmbedding = self.create_customEmbedding()
+        self.vectorStore = HanaDB(embedding=self.customEmbedding, connection=self.connection, table_name=self.tableName)
+    
+    def search_control_by_id(self, control_id: str):
+        if self.vectorStore is None:
+            print("Loading vectorstore...")
+            self.load_vectorstore()
+        controls = self.vectorStore.similarity_search(control_id, k=1, filter={"source": control_id})
+        if len(controls) == 0:
+            return None
+        return controls[0].page_content
 
-    def store_controls(self, controls):
-        self.vectorStore.add_texts(controls)
+    def store_controls(self, texts: Iterable[str], metadatas: Optional[List[dict]] = None):
+        if self.vectorStore is None:
+            print("Loading vectorstore...")
+            self.load_vectorstore()
+        self.vectorStore.add_texts(texts, metadatas=metadatas)
+
+    def delete_control_by_id(self, control_id):
+        if self.vectorStore is None:
+            print("Loading vectorstore...")
+            self.load_vectorstore()
+        return self.vectorStore.delete(filter={"source": control_id})
 
 class RAG(CommonFunctionality):
-    def __init__(self, credentials, connection):
-        super().__init__(credentials, connection)
+    def __init__(self, credentials, tableName, connection):
+        super().__init__(credentials, tableName, connection)
 
     def get_ai_suggestions(self, risk, standard, controls):
         template = """
@@ -119,11 +140,10 @@ class RAG(CommonFunctionality):
             ai_results = chain.run(risk=risk, standard=standard, controls=controls)
         return ai_results
 
-    def get_db_suggestions(self, path, query, collection_name, k=10):
+    def get_db_suggestions(self, query, k=10):
         if self.vectorStore is None:
             print("Loading vectorstore...")
-            documents = self.load_documents(path)
-            self.load_vectorstore(documents, collection_name)
+            self.load_vectorstore()
         relevant_docs = []
         print("Searching for relevant documents...")
         for doc, score in self.vectorStore.similarity_search_with_score(query, k=k):
@@ -132,11 +152,9 @@ class RAG(CommonFunctionality):
         print("relevant controls:", relevant_docs)
         return '\n'.join(relevant_docs)
 
-    def call_your_api(self, risk, standard, path, collection_name):
+    def call_your_api(self, risk, standard):
         relevant_controls = self.get_db_suggestions(
-            path=path,
-            query=risk,
-            collection_name=collection_name
+            query=risk
         )
         ai_results = self.get_ai_suggestions(risk, standard, relevant_controls)
         result = {'ai_suggestions': "The AI did not provide additional controls.", 'db_suggestions': "No applicable controls found."}
@@ -148,8 +166,8 @@ class RAG(CommonFunctionality):
         return result
     
 class RAGplus(CommonFunctionality):
-    def __init__(self, credentials, connection):
-        super().__init__(credentials, connection)
+    def __init__(self, credentials, tableName, connection):
+        super().__init__(credentials, tableName, connection)
     
     def simple_ai_suggestoin(self, risk, standard, number):
         template = """
@@ -193,11 +211,10 @@ class RAGplus(CommonFunctionality):
             self.customLLM = self.create_customLLM()
             ai_results = chain.run(risk=risk, standard=standard, controls=controls)
         return ai_results
-    def retrieve_relevant_controls(self, path, ai_results, collection_name, k=2):
+    def retrieve_relevant_controls(self, ai_results, k=2):
         if self.vectorStore is None:
             print("Loading vectorstore...")
-            documents = self.load_documents(path)
-            self.load_vectorstore(documents, collection_name)
+            self.load_vectorstore()
         page_contents = []
         print("Searching for similar documents...")
         for result in ai_results:
@@ -205,7 +222,7 @@ class RAGplus(CommonFunctionality):
                 page_contents.append(doc.page_content)
         unique_contents = list(set(page_contents))
         return '\n'.join(unique_contents)
-    def call_your_api(self, risk, standard, path, collection_name):
+    def call_your_api(self, risk, standard):
         template1 = """System:You are an experienced risk assessment expert.
         Please perform the following tasks:
         1 - Understand Treatment type and treatment type classification standards.
@@ -227,9 +244,7 @@ class RAGplus(CommonFunctionality):
         """
         first_ai_results = self.retrieve_ai_suggestions(template1, TransformToListFormat(), risk, standard)
         relevant_controls = self.retrieve_relevant_controls(
-            path=path,
-            ai_results=first_ai_results,
-            collection_name=collection_name
+            ai_results=first_ai_results
         )
         second_ai_results = self.retrieve_ai_suggestions(template2, resultJsonFormat(), risk, standard, relevant_controls)
         result = {'ai_suggestions': "The AI did not provide additional controls.", 'db_suggestions': "No applicable controls found."}

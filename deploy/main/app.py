@@ -30,7 +30,7 @@ if aicore is None:
 else:
     ai_credentials = aicore.credentials
 
-ragPlusPlus = RAG.RAGplus(ai_credentials, db_connection)
+ragPlusPlus = RAG.RAGplus(ai_credentials, "EMBEDDINGS_1", db_connection)
 
 @app.route('/')
 def index():
@@ -39,8 +39,26 @@ def index():
 @app.route('/storeControls', methods=['POST'])
 def storeControls():
     controls = request.json.get('controls')
-    ragPlusPlus.store_controls(controls)
+    metadatas = request.json.get('metadatas')
+    ragPlusPlus.store_controls(controls, metadatas)
     return jsonify({'result': 'success'})
+
+@app.route('/deleteControl', methods=['POST'])
+def deleteControl():
+    control_id = request.json.get('control_id')
+    if ragPlusPlus.delete_control_by_id(control_id):
+        return jsonify({'result': 'success'})
+    else:
+        return jsonify({'result': 'fail'})
+
+@app.route('/searchControl', methods=['POST'])
+def searchControl():
+    control_id = request.args.get('control_id')
+    result = ragPlusPlus.search_control_by_id(control_id)
+    if result is None:
+        return jsonify({'result': 'fail'})
+    else:
+        return jsonify({'result': result})
 
 @app.route('/getAIsuggestions', methods=['POST'])
 def getAIsuggestions():
@@ -60,9 +78,7 @@ def api():
     standard = request.json.get('risk_standard')
     result = ragPlusPlus.call_your_api(
         risk,
-        standard,
-        path='../data/Control.csv',
-        collection_name='EMBEDDINGS_1'
+        standard
     )
     return jsonify(result)
 
