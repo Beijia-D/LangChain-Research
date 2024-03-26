@@ -53,7 +53,7 @@ def deleteControl():
 
 @app.route('/searchControl', methods=['POST'])
 def searchControl():
-    control_id = request.args.get('control_id')
+    control_id = request.json.get('control_id')
     result = ragPlusPlus.search_control_by_id(control_id)
     if result is None:
         return jsonify({'result': 'fail'})

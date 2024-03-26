@@ -92,6 +92,7 @@ class CommonFunctionality:
         if self.vectorStore is None:
             print("Loading vectorstore...")
             self.load_vectorstore()
+        print("Start searching control:", control_id)
         controls = self.vectorStore.similarity_search(control_id, k=1, filter={"source": control_id})
         if len(controls) == 0:
             return None

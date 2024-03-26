@@ -24,5 +24,32 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "controls": ["ID: NIST SP 800-53 AC-20\nName: Use of External Information Systems\nDescription: Establish and implement controls to prevent unauthorized use of external information systems and to protect information when using external systems.","ID: NIST SP 800-53 SC-8\nName: Transmission Confidentiality and Integrity\nDescription: Protect information in transit from unauthorized disclosure and modification.","ID: NIST SP 800-53 AC-4\nName: Information Flow Enforcement\nDescription: Control the flow of information between designated sources and destinations within information systems."]
+    "controls": [
+        "ID: NIST SP 800-53 AC-20\nName: Use of External Information Systems\nDescription: Establish and implement controls to prevent unauthorized use of external information systems and to protect information when using external systems.",
+        "ID: NIST SP 800-53 SC-8\nName: Transmission Confidentiality and Integrity\nDescription: Protect information in transit from unauthorized disclosure and modification.",
+        "ID: NIST SP 800-53 AC-4\nName: Information Flow Enforcement\nDescription: Control the flow of information between designated sources and destinations within information systems."
+    ],
+    "metadatas": [
+        {"source": "NIST SP 800-53 AC-20"},
+        {"source": "NIST SP 800-53 SC-8"},
+        {"source": "NIST SP 800-53 AC-4"}
+    ]
+}
+
+###
+POST https://risk-control-proposal-poc-beijia-playground.cfapps.sap.hana.ondemand.com/deleteControl
+Content-Type: application/json
+Accept: application/json
+
+{
+    "control_id": "NIST SP 800-53 AC-4"
+}
+
+###
+POST https://risk-control-proposal-poc-beijia-playground.cfapps.sap.hana.ondemand.com/searchControl
+Content-Type: application/json
+Accept: application/json
+
+{
+    "control_id": "NIST SP 800-53 AC-4"
 }
