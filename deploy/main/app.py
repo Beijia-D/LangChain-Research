@@ -36,6 +36,12 @@ ragPlusPlus = RAG.RAGplus(ai_credentials, db_connection)
 def index():
     return render_template('index.html')
 
+@app.route('/storeControls', methods=['POST'])
+def storeControls():
+    controls = request.json.get('controls')
+    ragPlusPlus.store_controls(controls)
+    return jsonify({'result': 'success'})
+
 @app.route('/getAIsuggestions', methods=['POST'])
 def getAIsuggestions():
     risk = request.json.get('risk_info')

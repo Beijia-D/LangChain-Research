@@ -85,6 +85,9 @@ class CommonFunctionality:
         self.vectorStore = HanaDB(embedding=customEmbedding, connection=self.connection, table_name=collection_name)
         self.vectorStore.add_documents(documents)
 
+    def store_controls(self, controls):
+        self.vectorStore.add_texts(controls)
+
 class RAG(CommonFunctionality):
     def __init__(self, credentials, connection):
         super().__init__(credentials, connection)
