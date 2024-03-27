@@ -7,7 +7,7 @@ port = int(os.environ.get('PORT', 3001))
 
 import sys
 sys.path.append("..")
-from CustomModel import RAG
+from CustomModel import RAG, ControlRetriever
 
 app = Flask(__name__)
 env = AppEnv()
@@ -36,6 +36,19 @@ ragPlusPlus = RAG.RAGplus(ai_credentials, "EMBEDDINGS_1", db_connection)
 def index():
     return render_template('index.html')
 
+@app.route('/syncControls', methods=['GET'])
+def syncControls():
+    control_api_credentials = {
+        "endpoints": "https://GRCPCRMControlLibrary-controllibintegration-controllibrary-srv.cfapps.sap.hana.ondemand.com",
+        "clientid": "sb-6ecf26f0-c427-4d5b-ab10-44879ee658a4!b49874|control-controllibintegration!b4702",
+        "clientsecret": "11bb4957-2f93-4815-8b8e-49502dfa44bf$kDT_12yzVJkKwHQ19rjN4xTTHVbYKLFAQKRHl15--ec=",
+        "url": "https://happy-lemon.authentication.sap.hana.ondemand.com"
+    }
+    controlRetriever = ControlRetriever.ControlRetriever(control_api_credentials)
+    data = controlRetriever.get_controls()
+    ragPlusPlus.store_controls(data[0], data[1])
+    return jsonify({'result': 'success'})
+
 @app.route('/storeControls', methods=['POST'])
 def storeControls():
     controls = request.json.get('controls')
@@ -49,14 +62,14 @@ def deleteControl():
     if ragPlusPlus.delete_control_by_id(control_id):
         return jsonify({'result': 'success'})
     else:
-        return jsonify({'result': 'fail'})
+        return jsonify({'result': 'Fail to delete the control.'})
 
 @app.route('/searchControl', methods=['POST'])
 def searchControl():
     control_id = request.json.get('control_id')
     result = ragPlusPlus.search_control_by_id(control_id)
     if result is None:
-        return jsonify({'result': 'fail'})
+        return jsonify({'result': 'No control was found.'})
     else:
         return jsonify({'result': result})
 

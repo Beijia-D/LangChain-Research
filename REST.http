@@ -51,5 +51,18 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "control_id": "NIST SP 800-53 AC-4"
+    "control_id": "1"
 }
+
+###
+GET https://risk-control-proposal-poc-beijia-playground.cfapps.sap.hana.ondemand.com/syncControls
+
+### Control Api: get token
+# @name login
+GET https://happy-lemon.authentication.sap.hana.ondemand.com/oauth/token?grant_type=client_credentials
+Authorization: Basic sb-6ecf26f0-c427-4d5b-ab10-44879ee658a4!b49874|control-controllibintegration!b4702 11bb4957-2f93-4815-8b8e-49502dfa44bf$kDT_12yzVJkKwHQ19rjN4xTTHVbYKLFAQKRHl15--ec=
+
+@token = {{login.response.body.access_token}}
+### Control Api: get control
+GET https://GRCPCRMControlLibrary-controllibintegration-controllibrary-srv.cfapps.sap.hana.ondemand.com/odata/v4/ComplianceControlService/ComplianceControl
+Authorization: Bearer {{token}}
