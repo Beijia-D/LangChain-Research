@@ -46,6 +46,7 @@ def syncControls():
     }
     controlRetriever = ControlRetriever.ControlRetriever(control_api_credentials)
     data = controlRetriever.get_controls()
+    ragPlusPlus.clean_db()
     ragPlusPlus.store_controls(data[0], data[1])
     return jsonify({'result': 'success'})
 

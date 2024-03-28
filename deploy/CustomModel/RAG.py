@@ -75,23 +75,18 @@ class CommonFunctionality:
             userToken=self.userToken
         )
 
-    def load_documents(self, path, delimiter=';', quotechar='"', fieldnames=['id', 'name', 'description', 'significance'], source_column='id'):
-        loader = CSVLoader(file_path=path, csv_args={
-            'delimiter': delimiter,
-            'quotechar': quotechar,
-            'fieldnames': fieldnames
-        }, source_column=source_column)
-        return loader.load()
-
     def load_vectorstore(self):
         if self.customEmbedding is None:
             self.customEmbedding = self.create_customEmbedding()
         self.vectorStore = HanaDB(embedding=self.customEmbedding, connection=self.connection, table_name=self.tableName)
-    
-    def search_control_by_id(self, control_id: str):
+
+    def check_db_connection(self):
         if self.vectorStore is None:
             print("Loading vectorstore...")
             self.load_vectorstore()
+
+    def search_control_by_id(self, control_id: str):
+        self.check_db_connection()
         print("Start searching control:", control_id)
         controls = self.vectorStore.similarity_search(control_id, k=1, filter={"source": control_id})
         if len(controls) == 0:
@@ -99,16 +94,16 @@ class CommonFunctionality:
         return controls[0].page_content
 
     def store_controls(self, texts: Iterable[str], metadatas: Optional[List[dict]] = None):
-        if self.vectorStore is None:
-            print("Loading vectorstore...")
-            self.load_vectorstore()
+        self.check_db_connection()
         self.vectorStore.add_texts(texts, metadatas=metadatas)
 
     def delete_control_by_id(self, control_id):
-        if self.vectorStore is None:
-            print("Loading vectorstore...")
-            self.load_vectorstore()
+        self.check_db_connection()
         return self.vectorStore.delete(filter={"source": control_id})
+    
+    def clean_db(self):
+        self.check_db_connection()
+        self.vectorStore.delete(filter={})
 
 class RAG(CommonFunctionality):
     def __init__(self, credentials, tableName, connection):
